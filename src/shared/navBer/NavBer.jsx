@@ -1,68 +1,109 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
-import defaultImage from '../../../public/logo.png'
+import defaultImage from '../../../public/logo.png';
 
 const NavBer = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user , logout } = useAuth()
+  const { user, logout } = useAuth();
+
+
 
   return (
-    <nav className="bg-red-600/60 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <Link to={'/'} className="flex items-center">
-          <img src="/logo.png" alt="Logo" className="md:w-16 w-12 mr-2" />
-          <span className="text-white text-lg font-semibold">Best Outfit</span>
-        </Link>
-        <div className="hidden md:flex items-center space-x-4">
-          <Link to="/" className="text-white hover:text-gray-300">Home</Link>
-          {
-            user ? 
-            <button onClick={()=> logout()} className='text-white hover:text-gray-300'>Logout</button>
-            :
-          <Link to="/sign-in" className="text-white hover:text-gray-300">Sign In</Link>
-          }
-          <img
-            src={user ? user.photoURL : defaultImage }
-            alt="User"
-            className="h-8 w-8 rounded-full border-2 border-gray-600 bg-white"
-          />
-        </div>
-        <div className="md:hidden">
-          <button onClick={() => setIsOpen(!isOpen)} className="text-white focus:outline-none">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+    <nav className="relative bg-white shadow dark:bg-gray-800">
+      <div className="container px-6 py-4 mx-auto md:flex md:justify-between md:items-center">
+        <div className="flex items-center justify-between">
+          <div className='flex items-center gap-2 justify-center'>
+            <div><Link to="/">
+            <img className="w-auto  h-12 rounded-xl sm:h-12 " src="https://img.freepik.com/free-vector/flat-laptop-logo-template_23-2149017459.jpg?size=338&ext=jpg&ga=GA1.1.2008272138.1723852800&semt=ais_hybrid" alt="Best Outfit" />
+          </Link></div>
+            <div>Laptop Shop</div>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="flex lg:hidden">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              type="button"
+              className="text-gray-500 dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400 focus:outline-none focus:text-gray-600 dark:focus:text-gray-400"
+              aria-label="toggle menu"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d={isOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
-              ></path>
-            </svg>
-          </button>
+              {isOpen ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 8h16M4 16h16" />
+                </svg>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <div
+          className={`absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white dark:bg-gray-800 md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center ${
+            isOpen ? 'translate-x-0 opacity-100' : 'opacity-0 -translate-x-full'
+          }`}
+        >
+          <div className="flex flex-col md:flex-row md:mx-6">
+            <Link
+              to="/"
+              className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+            >
+              Home
+            </Link>
+            
+            
+            {user ? (
+              <button
+                onClick={() => logout()}
+                className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link
+                to="/sign-in"
+                className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+              >
+                Sign In
+              </Link>
+            )}
+          </div>
+
+          <div className="flex items-center justify-center md:block">
+           {user ?  <img
+              src={user?.photoURL}
+              alt="User"
+              className="h-8 w-8 rounded-full border-2 border-gray-600 bg-white ml-4"
+            /> : <img className='h-8 rounded-md w-8' src="https://img.freepik.com/premium-photo/boy-flat-cartoon-character-illustration_620650-2108.jpg" alt="" />
+            }
+           
+
+            
+          </div>
         </div>
       </div>
-      {isOpen && (
-        <div className="md:hidden flex flex-col items-center">
-          <Link href="/" className="block text-white py-2">Home</Link>
-          {
-            user ? 
-            <button onClick={()=> logout()} className='text-white hover:text-gray-300'>Logout</button>
-            :
-          <Link to="/sign-in" className="text-white hover:text-gray-300">Sign In</Link>
-          }
-          <img
-            src={user ? user.photoURL : defaultImage }
-            alt="User"
-            className="h-8 w-8 rounded-full border-2 border-white mt-4"
-          />
-        </div>
-      )}
     </nav>
   );
 };
