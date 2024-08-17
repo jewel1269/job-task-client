@@ -1,4 +1,4 @@
-### Project Name: Best Outfit (https://best-outfit-client.vercel.app)
+### Project Name: Tech Shop (https://job-task-d6aa7.web.app/)
 
 ## Project Overview
 
@@ -24,7 +24,7 @@ This is the frontend part of the Fullstack Product Search and Filtering Website.
 
 1. Clone the repository:
    ```bash
-   git clone <https://github.com/git-zahidul-islam/best-outfit-client>
+   git clone <https://github.com/jewel1269/job-task-client.git>
    cd <frontend-directory>
 2. Install dependencies: npm install
 3. Create a .env file in the root directory and add your Firebase configuration
