@@ -32,6 +32,7 @@ const Home = () => {
         },
       });
       setProducts(response.data.products);
+      
       setTotalPages(response.data.totalPages);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -42,11 +43,14 @@ const Home = () => {
     fetchProducts();
   }, [page, search, brand, category, minPrice, maxPrice, sortBy, sortOrder]);
 
+  console.log(search, "this is products");
+
   return (
-    <div className="md:w-[92%] w-[95%] mx-auto">
+    <div className="md:w-[92%] min-h-screen  w-[95%] mx-auto">
       <Helmet>
-        <title>Best Outfit | Home</title>
+        <title>Tech Shop | Home</title>
       </Helmet>
+
       {/* Search and Filters */}
       <div className="flex md:flex-row flex-col justify-center my-8">
         <input
@@ -57,24 +61,36 @@ const Home = () => {
           className="border p-2 rounded mb-2 mr-2"
         />
         <select
+          value={brand} // Added value attribute for controlled component
           onChange={(e) => setBrand(e.target.value)}
           className="border p-2 rounded mb-2 mr-2"
         >
           <option value="">All Brands</option>
-          <option value="Gucci">Gucci</option>
-          <option value="Ralph Lauren">Ralph Lauren</option>
-          <option value="Calvin Klein">Calvin Klein</option>
-          <option value="Hugo Boss">Hugo Boss</option>
+          <option value="Apple">Apple</option>
+          <option value="Google">Google</option>
+          <option value="Samsung">Samsung</option>
+          <option value="Canon">Canon</option>
+          <option value="Sony">Sony</option>
+          <option value="OnePlus">OnePlus</option>
+          <option value="Fujifilm">Fujifilm</option>
+          <option value="LG">LG</option>
+          <option value="Asus">Asus</option>
+          <option value="Microsoft">Microsoft</option>
+          <option value="Huawei">Huawei</option>
+          <option value="Acer">Acer</option>
+          <option value="MSI">MSI</option>
+          <option value="Bose">Bose</option>
         </select>
         <select
+          value={category} // Added value attribute for controlled component
           onChange={(e) => setCategory(e.target.value)}
           className="border p-2 rounded mb-2 mr-2"
         >
           <option value="">All Categories</option>
-          <option value="Shoe(s)">Shoe(s)</option>
-          <option value="Shirt">Shirt</option>
-          <option value="T-shirt">T-shirt</option>
-          <option value="Pant">Pant</option>
+          <option value="Laptop">Laptop</option>
+          <option value="Phone">Mobile</option>
+          <option value="Camera">Camera</option>
+          <option value="Monitor">Monitor</option>
         </select>
         <input
           type="number"
@@ -93,57 +109,57 @@ const Home = () => {
 
         {/* Sort By Dropdown */}
         <select
+          value={sortBy} // Added value attribute for controlled component
           onChange={(e) => setSortBy(e.target.value)}
           className="border p-2 rounded mb-2 mr-2"
         >
           <option value="">Sort By</option>
           <option value="price">Price</option>
-          <option value="creationDate">Date</option> {/* Updated Label */}
+          <option value="creationDate">Date</option>
         </select>
 
-        <div>
-          <select
-            onChange={(e) => {
-              const value = e.target.value;
-              if (value === "price-asc") {
-                setSortBy("price");
-                setSortOrder("asc");
-              } else if (value === "price-desc") {
-                setSortBy("price");
-                setSortOrder("desc");
-              } else if (value === "date-desc") {
-                setSortBy("creationDate");
-                setSortOrder("desc");
-              }
-            }}
-            className="border border-white p-2 rounded mb-2 mr-2"
-          >
-            <option value="">Sort By</option>
-            <option value="price-asc">Price (Low to High)</option>
-            <option value="price-desc">Price (High to Low)</option>
-            <option value="date-desc">Date (Newest)</option>
-          </select>
-        </div>
+        <select
+          value={`${sortBy}-${sortOrder}`} // Added value attribute for controlled component
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value === "price-asc") {
+              setSortBy("price");
+              setSortOrder("asc");
+            } else if (value === "price-desc") {
+              setSortBy("price");
+              setSortOrder("desc");
+            } else if (value === "date-desc") {
+              setSortBy("creationDate");
+              setSortOrder("desc");
+            }
+          }}
+          className="border border-white p-2 rounded mb-2 mr-2"
+        >
+          <option value="">Sort By</option>
+          <option value="price-asc">Price (Low to High)</option>
+          <option value="price-desc">Price (High to Low)</option>
+          <option value="date-desc">Date (Newest)</option>
+        </select>
       </div>
 
       {/* Product Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 gap-8">
         {products?.length > 0 ? (
           products.map((product) => (
             <ShopCard
               key={product._id}
-              brandName={product?.brandName}
-              category={product?.category}
-              dateAndTime={product?.creationDate}
-              description={product?.description}
-              price={product?.price}
-              image={product?.productImage}
-              title={product?.productName}
-              ratings={product?.ratings}
+              brandName={product.brandName}
+              category={product.category}
+              dateAndTime={product.date}
+              description={product.description}
+              price={product.price}
+              image={product.productImage}
+              title={product.productName}
+              ratings={product.ratings}
             />
           ))
         ) : (
-          <p>Loading products...</p>
+          <p>No products found.</p>
         )}
       </div>
 

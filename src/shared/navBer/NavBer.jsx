@@ -17,7 +17,7 @@ const NavBer = () => {
             <div><Link to="/">
             <img className="w-auto  h-12 rounded-xl sm:h-12 " src="https://img.freepik.com/free-vector/flat-laptop-logo-template_23-2149017459.jpg?size=338&ext=jpg&ga=GA1.1.2008272138.1723852800&semt=ais_hybrid" alt="Best Outfit" />
           </Link></div>
-            <div>Laptop Shop</div>
+            <div className='text-2xl'>Tech Shop</div>
           </div>
 
           {/* Mobile menu button */}
@@ -98,6 +98,7 @@ const NavBer = () => {
               className="h-8 w-8 rounded-full border-2 border-gray-600 bg-white ml-4"
             /> : <img className='h-8 rounded-md w-8' src="https://img.freepik.com/premium-photo/boy-flat-cartoon-character-illustration_620650-2108.jpg" alt="" />
             }
+          
            
 
             
